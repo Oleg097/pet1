@@ -1,0 +1,17 @@
+<!DOCTYPE HTML>
+<html>
+
+<body>
+<div> Выберите пожалуйста свой принтер </div>
+
+{{#findPrinter}}
+    <div>
+        <a href="/getDescriptionOfPrinter">
+        <b>{{vendor}}</b>
+        <span>{{model}}</span>
+        <i>{{article}}</i>
+        </a>
+    </div>
+{{/findPrinter}}
+</body>
+</html>

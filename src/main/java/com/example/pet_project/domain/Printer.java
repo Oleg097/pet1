@@ -1,9 +1,8 @@
 package com.example.pet_project.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Printer {
@@ -14,19 +13,25 @@ public class Printer {
     private String article;                          //уникальный артикул
     private String model;                            // модель
     private String technology;                       // технология печати
-    private String bind_id;                          // id принтера, для поиска
+
+
+    @ManyToMany
+    @JoinTable (name = "printer_cartrige",
+    joinColumns = @JoinColumn(name = "print_id"),
+    inverseJoinColumns = @JoinColumn(name="cart_id"))
+    private List<Cartrige> cartriges;
+
+
 
     public Printer() {
     }
 
-    public Printer(String vendor, String article, String model,
-                   String technology, String bind_id)
-    {
+    public Printer(String vendor, String article, String model, String technology, List<Cartrige> cartriges) {
         this.vendor = vendor;
         this.article = article;
         this.model = model;
         this.technology = technology;
-        this.bind_id = bind_id;
+        this.cartriges = cartriges;
     }
 
     public Integer getId() {
@@ -69,12 +74,31 @@ public class Printer {
         this.technology = technology;
     }
 
-    public String getBind_id() {
-        return bind_id;
+    public List<Cartrige> getCartriges() {
+        return cartriges;
     }
 
-    public void setBind_id(String bind_id) {
-        this.bind_id = bind_id;
+    public void setCartriges(List<Cartrige> cartriges) {
+        this.cartriges = cartriges;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Printer printer = (Printer) o;
+        return Objects.equals(id, printer.id) &&
+                Objects.equals(vendor, printer.vendor) &&
+                Objects.equals(article, printer.article) &&
+                Objects.equals(model, printer.model) &&
+                Objects.equals(technology, printer.technology) &&
+                Objects.equals(cartriges, printer.cartriges);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, vendor, article, model, technology, cartriges);
     }
 }
 

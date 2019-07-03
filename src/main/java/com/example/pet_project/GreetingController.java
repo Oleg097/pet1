@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.*;
@@ -33,13 +32,43 @@ public class GreetingController {
     }
 
     @GetMapping("/wichOfEps")
-    public String printerOrCartrige(
+    public String printerOrCartrigeEpson(
             @RequestParam(name = "name", required = false, defaultValue = "World") String name,
             Map<String, Object> model
 
     ) {
         model.put("name", name);
-        return "printOrCartChoise";
+        return "printOrCartChoiseEpson";
+    }
+
+    @GetMapping("/wichOfCanon")
+    public String printerOrCartrigeCanon(
+            @RequestParam(name = "name", required = false, defaultValue = "World") String name,
+            Map<String, Object> model
+
+    ) {
+        model.put("name", name);
+        return "printOrCartChoiseCanon";
+    }
+
+    @GetMapping("/wichOfBrother")
+    public String printerOrCartrigeBrother(
+            @RequestParam(name = "name", required = false, defaultValue = "World") String name,
+            Map<String, Object> model
+
+    ) {
+        model.put("name", name);
+        return "printOrCartChoiseBrother";
+    }
+
+    @GetMapping("/wichOfSamsung")
+    public String printerOrCartrigeSamsung(
+            @RequestParam(name = "name", required = false, defaultValue = "World") String name,
+            Map<String, Object> model
+
+    ) {
+        model.put("name", name);
+        return "printOrCartChoiseSamsung";
     }
 
     @GetMapping("/epsonsPrinters")
@@ -60,7 +89,7 @@ public class GreetingController {
         return "mainCartrige";
     }
 
-    @GetMapping("/canons")
+    @GetMapping("/canonPrinters")
     public String findCan(Map<String, Object> model) {
         String vendor = "canon";
         Iterable<Printer> findprinters;
@@ -73,8 +102,17 @@ public class GreetingController {
         return "mainPrinter";
     }
 
-    @GetMapping("/brother")
-    public String findXer(Map<String, Object> model) {
+    @GetMapping("/canonCartriges")
+    public String findCanonCartriges(Map<String, Object> model) {
+        String vendor = "canon";
+        Iterable<Cartrige> findcartriges;
+        findcartriges = cartrigeRepo.findByVendorContains(vendor);
+        model.put("findCart", findcartriges);
+        return "mainCartrige";
+    }
+
+    @GetMapping("/brotherPrinters")
+    public String findBrother(Map<String, Object> model) {
         String vendor = "brother";
         Iterable<Printer> findprinters;
         if (vendor != null && !vendor.isEmpty()) {
@@ -86,7 +124,16 @@ public class GreetingController {
         return "mainPrinter";
     }
 
-    @GetMapping("/samsungs")
+    @GetMapping("/brotherCartriges")
+    public String findBrotherCartriges(Map<String, Object> model) {
+        String vendor = "brother";
+        Iterable<Cartrige> findcartriges;
+        findcartriges = cartrigeRepo.findByVendorContains(vendor);
+        model.put("findCart", findcartriges);
+        return "mainCartrige";
+    }
+
+    @GetMapping("/samsungPrinters")
     public String findSams(Map<String, Object> model) {
         String vendor = "samsung";
         Iterable<Printer> findprinters;
@@ -97,6 +144,15 @@ public class GreetingController {
         }
         model.put("findPrinter", findprinters);
         return "mainPrinter";
+    }
+
+    @GetMapping("/samsungCartriges")
+    public String findSamsungCartriges(Map<String, Object> model) {
+        String vendor = "samsung";
+        Iterable<Cartrige> findcartriges;
+        findcartriges = cartrigeRepo.findByVendorContains(vendor);
+        model.put("findCart", findcartriges);
+        return "mainCartrige";
     }
 
     @GetMapping("/getDescriptionOfPrinter/{printer}")

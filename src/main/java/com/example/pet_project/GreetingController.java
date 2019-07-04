@@ -2,14 +2,15 @@ package com.example.pet_project;
 
 import com.example.pet_project.domain.Cartrige;
 import com.example.pet_project.domain.Printer;
+import com.example.pet_project.domain.Vendor;
 import com.example.pet_project.repos.CartrigeRepo;
 import com.example.pet_project.repos.PrinterRepo;
+import com.example.pet_project.repos.VendorRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.*;
 
@@ -20,140 +21,15 @@ public class GreetingController {
     private PrinterRepo printerRepo;
     @Autowired
     private CartrigeRepo cartrigeRepo;
+    @Autowired
+    private VendorRepo vendorRepo;
 
     @GetMapping("/")
-    public String greeting(
-            @RequestParam(name = "name", required = false, defaultValue = "World") String name,
-            Map<String, Object> model
+    public String greeting() {
 
-    ) {
-        model.put("name", name);
-        return "greeting";
+        return "main";
     }
 
-    @GetMapping("/wichOfEps")
-    public String printerOrCartrigeEpson(
-            @RequestParam(name = "name", required = false, defaultValue = "World") String name,
-            Map<String, Object> model
-
-    ) {
-        model.put("name", name);
-        return "printOrCartChoiseEpson";
-    }
-
-    @GetMapping("/wichOfCanon")
-    public String printerOrCartrigeCanon(
-            @RequestParam(name = "name", required = false, defaultValue = "World") String name,
-            Map<String, Object> model
-
-    ) {
-        model.put("name", name);
-        return "printOrCartChoiseCanon";
-    }
-
-    @GetMapping("/wichOfBrother")
-    public String printerOrCartrigeBrother(
-            @RequestParam(name = "name", required = false, defaultValue = "World") String name,
-            Map<String, Object> model
-
-    ) {
-        model.put("name", name);
-        return "printOrCartChoiseBrother";
-    }
-
-    @GetMapping("/wichOfSamsung")
-    public String printerOrCartrigeSamsung(
-            @RequestParam(name = "name", required = false, defaultValue = "World") String name,
-            Map<String, Object> model
-
-    ) {
-        model.put("name", name);
-        return "printOrCartChoiseSamsung";
-    }
-
-    @GetMapping("/epsonsPrinters")
-    public String findEpsonPrinters(Map<String, Object> model) {
-        String vendor = "epson";
-        Iterable<Printer> findprinters;
-        findprinters = printerRepo.findByVendorContains(vendor);
-        model.put("findPrinter", findprinters);
-        return "mainPrinter";
-    }
-
-    @GetMapping("/epsonsCartriges")
-    public String findEpsonCartriges(Map<String, Object> model) {
-        String vendor = "epson";
-        Iterable<Cartrige> findcartriges;
-        findcartriges = cartrigeRepo.findByVendorContains(vendor);
-        model.put("findCart", findcartriges);
-        return "mainCartrige";
-    }
-
-    @GetMapping("/canonPrinters")
-    public String findCan(Map<String, Object> model) {
-        String vendor = "canon";
-        Iterable<Printer> findprinters;
-        if (vendor != null && !vendor.isEmpty()) {
-            findprinters = printerRepo.findByVendorContains(vendor);
-        } else {
-            findprinters = null;
-        }
-        model.put("findPrinter", findprinters);
-        return "mainPrinter";
-    }
-
-    @GetMapping("/canonCartriges")
-    public String findCanonCartriges(Map<String, Object> model) {
-        String vendor = "canon";
-        Iterable<Cartrige> findcartriges;
-        findcartriges = cartrigeRepo.findByVendorContains(vendor);
-        model.put("findCart", findcartriges);
-        return "mainCartrige";
-    }
-
-    @GetMapping("/brotherPrinters")
-    public String findBrother(Map<String, Object> model) {
-        String vendor = "brother";
-        Iterable<Printer> findprinters;
-        if (vendor != null && !vendor.isEmpty()) {
-            findprinters = printerRepo.findByVendorContains(vendor);
-        } else {
-            findprinters = null;
-        }
-        model.put("findPrinter", findprinters);
-        return "mainPrinter";
-    }
-
-    @GetMapping("/brotherCartriges")
-    public String findBrotherCartriges(Map<String, Object> model) {
-        String vendor = "brother";
-        Iterable<Cartrige> findcartriges;
-        findcartriges = cartrigeRepo.findByVendorContains(vendor);
-        model.put("findCart", findcartriges);
-        return "mainCartrige";
-    }
-
-    @GetMapping("/samsungPrinters")
-    public String findSams(Map<String, Object> model) {
-        String vendor = "samsung";
-        Iterable<Printer> findprinters;
-        if (vendor != null && !vendor.isEmpty()) {
-            findprinters = printerRepo.findByVendorContains(vendor);
-        } else {
-            findprinters = null;
-        }
-        model.put("findPrinter", findprinters);
-        return "mainPrinter";
-    }
-
-    @GetMapping("/samsungCartriges")
-    public String findSamsungCartriges(Map<String, Object> model) {
-        String vendor = "samsung";
-        Iterable<Cartrige> findcartriges;
-        findcartriges = cartrigeRepo.findByVendorContains(vendor);
-        model.put("findCart", findcartriges);
-        return "mainCartrige";
-    }
 
     @GetMapping("/getDescriptionOfPrinter/{printer}")
     public String findCart(
@@ -174,6 +50,43 @@ public class GreetingController {
         model.addAttribute("findPrinter", printers);
         return "mainPrinter";
     }
+
+    @GetMapping("/PrinterVendors")
+    public String printerVendors(Map<String, Object> model) {
+        Iterable<Vendor> findVendors =vendorRepo.findAll();
+        model.put("vendors", findVendors);
+        return "setOfPrinterVendors";
+    }
+    @GetMapping("/CartrigeVendors")
+    public String cartrigeVendors(Map<String, Object> model) {
+        Iterable<Vendor> findVendors =vendorRepo.findAll();
+        model.put("vendors", findVendors);
+        return "setOfCartrigeVendors";
+    }
+
+    @GetMapping("/getPrinterByVendor/{vendor}")
+    public String findPrinter(
+            @PathVariable Vendor vendor,
+            Model model
+    ) {
+        String vend = vendor.getName();
+        Iterable<Printer> printers = printerRepo.findByVendorContains(vend);
+        model.addAttribute("findPrinter", printers);
+        return "mainPrinter";
+    }
+
+    @GetMapping("/getCartrigeByVendor/{vendor}")
+    public String findCartrige(
+            @PathVariable Vendor vendor,
+            Model model
+    ) {
+        String vend = vendor.getName();
+        Iterable<Cartrige> cartriges = cartrigeRepo.findByVendorContains(vend);
+        model.addAttribute("findCart", cartriges);
+        return "mainCartrige";
+    }
+
+
     }
 
 

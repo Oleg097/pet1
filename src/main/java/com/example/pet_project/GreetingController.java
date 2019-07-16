@@ -69,8 +69,7 @@ public class GreetingController {
             @PathVariable Vendor vendor,
             Model model
     ) {
-        String vend = vendor.getName();
-        Iterable<Printer> printers = printerRepo.findByVendorContains(vend);
+        Iterable<Printer> printers = printerRepo.findByVendorContains(vendor.getName());
         model.addAttribute("findPrinter", printers);
         return "mainPrinter";
     }
@@ -80,8 +79,8 @@ public class GreetingController {
             @PathVariable Vendor vendor,
             Model model
     ) {
-        String vend = vendor.getName();
-        Iterable<Cartrige> cartriges = cartrigeRepo.findByVendorContains(vend);
+
+        Iterable<Cartrige> cartriges = cartrigeRepo.findByVendorContains(vendor.getName());
         model.addAttribute("findCart", cartriges);
         return "mainCartrige";
     }

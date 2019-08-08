@@ -1,13 +1,19 @@
-<!DOCTYPE HTML>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <html>
 
 <body>
-<div> Выберите пожалуйста производителя </div>
-{{#vendors}}
+<div class="container">
     <div>
-        <a href="/getCartrigeByVendor/{{id}}">
-            <b>{{name}}</b>
+        <div class="shadow-lg p-3 mb-5 bg-white rounded">
+            <h5 class="card-title">Выберите пожалуйста производителя картриджей</h5>
+        </div>
     </div>
-{{/vendors}}
+    {{#vendors}}
+        <div>
+            <a href="/getCartrigeByVendor/{{id}}">
+                <h5 class="card-title">{{name}}</h5>
+        </div>
+    {{/vendors}}
+</div>
 </body>
 </html>

@@ -13,6 +13,7 @@ public class Printer {
     private String article;                          //уникальный артикул
     private String model;                            // модель
     private String technology;                       // технология печати
+    private String filename;
 
 
     @ManyToMany
@@ -32,6 +33,11 @@ public class Printer {
         this.model = model;
         this.technology = technology;
         this.cartriges = cartriges;
+    }
+    public Printer(String vendor, String article, String technology) {
+        this.vendor = vendor;
+        this.article = article;
+        this.technology = technology;
     }
 
     public Integer getId() {
@@ -82,6 +88,13 @@ public class Printer {
         this.cartriges = cartriges;
     }
 
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
 
     @Override
     public boolean equals(Object o) {

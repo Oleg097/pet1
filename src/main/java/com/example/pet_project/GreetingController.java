@@ -7,11 +7,17 @@ import com.example.pet_project.repos.CartrigeRepo;
 import com.example.pet_project.repos.PrinterRepo;
 import com.example.pet_project.repos.VendorRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
 @Controller
@@ -23,6 +29,9 @@ public class GreetingController {
     private CartrigeRepo cartrigeRepo;
     @Autowired
     private VendorRepo vendorRepo;
+
+    @Value("{upload.path}")
+    private String uploadPath;
 
     @GetMapping("/")
     public String greeting() {
@@ -36,10 +45,10 @@ public class GreetingController {
             @PathVariable Printer printer,
             Model model
     ) {
-            List<Cartrige> cartriges = printer.getCartriges();
-            model.addAttribute("findCart", cartriges);
-            return "mainCartrige";
-        }
+        List<Cartrige> cartriges = printer.getCartriges();
+        model.addAttribute("findCart", cartriges);
+        return "mainCartrige";
+    }
 
     @GetMapping("/getDescriptionOfCartrige/{cartrige}")
     public String findPrint(
@@ -53,13 +62,14 @@ public class GreetingController {
 
     @GetMapping("/PrinterVendors")
     public String printerVendors(Map<String, Object> model) {
-        Iterable<Vendor> findVendors =vendorRepo.findAll();
+        Iterable<Vendor> findVendors = vendorRepo.findAll();
         model.put("vendors", findVendors);
         return "setOfPrinterVendors";
     }
+
     @GetMapping("/CartrigeVendors")
     public String cartrigeVendors(Map<String, Object> model) {
-        Iterable<Vendor> findVendors =vendorRepo.findAll();
+        Iterable<Vendor> findVendors = vendorRepo.findAll();
         model.put("vendors", findVendors);
         return "setOfCartrigeVendors";
     }
@@ -86,7 +96,7 @@ public class GreetingController {
     }
 
 
-    }
+}
 
 
 

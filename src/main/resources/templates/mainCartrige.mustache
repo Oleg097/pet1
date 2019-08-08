@@ -1,15 +1,24 @@
-<!DOCTYPE HTML>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <html>
 <body>
-<div> Выберите пожалуйста свой картридж </div>
-{{#findCart}}
-    <div>
-        <a href="/getDescriptionOfCartrige/{{id}}">
-        <b>{{vendor}},</b>
-        <span> {{description}},</span>
-        <i> {{article}},</i>
-        <i> {{color}}</i>
+<div class="container">
+    <<div class="shadow-lg p-3 mb-5 bg-white rounded">
+    <h5 class="card-title">Выберите из списка картриджей интересующую модель</h5>
+</div>
+    <div class="card-columns">
+        {{#findCart}}
+            <div class="card my-3" style="width: 15rem;">
+                <img src="/img/{{filename}}" class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title">{{vendor}}</h5>
+                    <p class="card-text">{{description}}</p>
+                    <p class="card-text">Артикул: {{article}}</p>
+                    <p class="card-text">Цвет: {{color}}</p>
+                    <a href="/getDescriptionOfCartrige/{{id}}" class="btn btn-primary">Список совместимых принтеров</a>
+                </div>
+            </div>
+        {{/findCart}}
     </div>
-{{/findCart}}
+</div>
 </body>
 </html>

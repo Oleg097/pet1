@@ -14,6 +14,9 @@ public class Cartrige {
     private String description;
     private String technology;
     private String color;
+    private String filename;
+
+
 
     @ManyToMany
     @JoinTable (name = "printer_cartrige",
@@ -89,6 +92,13 @@ public class Cartrige {
         this.printers = printers;
     }
 
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
 
     @Override
     public boolean equals(Object o) {
